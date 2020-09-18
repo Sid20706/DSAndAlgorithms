@@ -1,3 +1,11 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LearnAutoFac.Leetcode
+{
     public class _407_Trapping_Rain_Water2
     {
         public class Cell : IComparable<Cell>
@@ -54,6 +62,7 @@
             bool[,] visited = new bool[rl, cl];
             DS.PriorityQueue<Cell> queue = new DS.PriorityQueue<Cell>();
 
+            // Add all boundary cells 
             for (int r = 0; r < rl; r++)
             {
                 visited[r, 0] = true;
@@ -71,6 +80,8 @@
             }
 
             int[,] dirs = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
+
+            //do 1 BFS (4 directions)
             while (!queue.IsEmpty())
             {
                 Cell c = queue.Dequeue();
@@ -82,8 +93,9 @@
                     {
 
                         visited[ri, ci] = true;
-                        res += Math.Max(0, c.Height - heightMap[ri][ci]);
-
+                        //If (ri,ci) height is lower, it can hold water and the amount of water should be c.Height - heightMap[ri][ci]
+                        res += Math.Max(0, c.Height - heightMap[ri][ci]);  
+                        // take max hieght 
                         queue.Enqueue(new Cell(ri, ci, Math.Max(heightMap[ri][ci] ,c.Height)));
 
                     }
@@ -154,3 +166,4 @@
             return res;
         }
     }
+}
